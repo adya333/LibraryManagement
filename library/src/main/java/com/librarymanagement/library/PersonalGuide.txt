@@ -1,0 +1,63 @@
+1. First Create the neat folder structure.
+2. Create the entity Classes
+3. Ceate Jpa repositories for each enitity.
+
+4. What is this exaclty in Author.java "@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)"
+Ans:-
+     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+     This is usually placed inside the Author entity to represent the relationship between an Author and their Books.
+     1. @OneToMany
+     Declares that one Author can have many Books.
+     This is the "parent side" of a one-to-many relationship.
+     2. mappedBy = "author"
+     Tells JPA which field in the Book entity owns the relationship.
+     In Book, you would have something like:
+     @ManyToOne
+     @JoinColumn(name = "author_id")
+     private Author author;
+     That means the Book table will have the foreign key (author_id) column.
+     mappedBy just says: "Don’t create another column in the Author table, the relationship is already managed in Book."
+     ✅ Importance: Prevents duplicate foreign key columns and makes the Book entity the owning side.
+     3. cascade = CascadeType.ALL
+     Means all operations on the Author should cascade to its Books.
+     For example:
+     If you save an Author with its list of Books → all Books are saved automatically.
+     If you delete an Author → all related Books are deleted too.
+     If you update the Author → its Books get updated.
+     ✅ Importance: Makes handling parent-child entities much easier, no need to manually save/delete Books when you save/delete an Author.
+     4. orphanRemoval = true
+     If you remove a Book from the Author’s collection (author.getBooks().remove(book)), then JPA will delete that Book from the database automatically.
+     Example:
+     author.getBooks().remove(book); // removes from Set
+     With orphanRemoval = true → The book row is deleted in DB.
+     Without it → Only removed from Java object, but still remains in DB.
+     ✅ Importance: Keeps DB in sync with Java objects, prevents "orphan" rows.
+     Putting it together
+     @Entity
+     public class Author {
+         @Id
+         private Long authorId;
+
+         @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+         private Set<Book> books = new HashSet<>();
+     }
+     One Author → Many Books
+     Author does not store foreign key, Book does
+     Saves/deletes cascade
+     Orphans removed
+
+5. Owner vs inverse side of the relationship?
+6. Why use these DTOs? Why are there types again; request and response?
+DTOs (Data Transfer Objects) are used to separate the internal entity models from the data that flows in and out of the API, ensuring security,
+maintainability, and clarity. We use different types—request DTOs for accepting and validating data coming from the client,
+and response DTOs for shaping and returning only the necessary information back to the client. This prevents overexposing internal fields,
+allows flexibility in how data is presented, and makes the API more robust against changes in the underlying entity structure.
+Like here, when we are adding a book the requestdto doesn't contain id or Author object, it contains author id. This service checks the availabilty of the author
+and inserts the object into the model. and while saving to db, the id is auto generated and returned by thr responseDto.
+
+7. even though I have Author author but the db book has author_id column??
+Even though your Java entity has private Author author, JPA/Hibernate maps relationships via foreign keys.
+It doesn’t put the entire Author object in the books table—it only stores a reference (the author_id).
+
+8. Difference between patch and put request??
+PUT rplaces the entire record with the new incmoing record. patch updates only the required fields.

@@ -28,8 +28,4 @@ public class BookResponseDTO {
     private Integer availableCopies;
 
     private BookStatus status; // e.g., AVAILABLE, BORROWED, RESERVED
-
-
-
-
 }

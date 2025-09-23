@@ -1,5 +1,6 @@
 package com.librarymanagement.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -19,14 +20,13 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long authorId;
     @NotNull
-    String Name;
+    String name;
     @NotNull
     String nationality;
-    @NotNull
     LocalDate birthDate;
-    @NotNull
     LocalDate deathDate;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Book> books = new HashSet<>();
 }

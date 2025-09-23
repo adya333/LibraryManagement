@@ -1,5 +1,6 @@
 package com.librarymanagement.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Book {
     // Many books can have one author
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id") // FK in book table
+    @JsonBackReference
     private Author author;
 
     private String publisher;

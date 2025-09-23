@@ -5,7 +5,6 @@ import com.librarymanagement.library.dtos.request.BookRequestDTO;
 import com.librarymanagement.library.dtos.response.BookResponseDTO;
 import com.librarymanagement.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")
-public class MainController {
+public class BookController {
 
     private final BookService bookService;
 
     @Autowired
-    public MainController(BookService bookService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 

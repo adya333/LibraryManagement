@@ -21,4 +21,10 @@ public class GlobalExceptionHandler {
     {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
+
+    @ExceptionHandler({NotEnoughCopiesAvailable.class})
+    public ResponseEntity<Object> handleNotEnoughCopiesAvailable(NotEnoughCopiesAvailable ex)
+    {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
 }

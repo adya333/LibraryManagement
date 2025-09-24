@@ -61,3 +61,13 @@ It doesn’t put the entire Author object in the books table—it only stores a 
 
 8. Difference between patch and put request??
 PUT rplaces the entire record with the new incmoing record. patch updates only the required fields.
+
+Enitity-> Respository-> Service-> Controller
+
+9. Why int doesnt need NotNull validation but Integer does??
+In Java, primitive types like `int`, `double`, `boolean`, etc., **cannot be null** by design—they always have a default value
+ (for example, `int` defaults to `0`). Because of this, annotations like `@NotNull` have **no effect** on primitives: the field can never actually be null,
+ so the validation is meaningless. To make `@NotNull` effective, you need to use the corresponding **wrapper class** (e.g., `Integer` for `int`, `Double` for `double`, `Boolean` for `boolean`).
+ Wrapper classes are **objects**, so they can be null. When you annotate a field of type `Integer` with `@NotNull`, the validation framework (like Spring’s Bean Validation) can check whether the
+ value is null at runtime and reject invalid inputs, enforcing proper data validation before the object is persisted or processed. This is particularly important in DTOs where the field value comes from external sources, such as JSON requests,
+ because it allows you to prevent missing or incomplete data from entering your application.

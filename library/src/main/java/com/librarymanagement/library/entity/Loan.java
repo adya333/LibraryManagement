@@ -45,6 +45,7 @@ public class Loan {
 
     private Double fineAmount; // Fine for late return
 
+    @Enumerated(EnumType.STRING) // keeps it readable in DB
     private LoanStatus status; // e.g., ISSUED, RETURNED, OVERDUE
 
 }

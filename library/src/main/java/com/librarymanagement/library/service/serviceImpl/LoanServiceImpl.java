@@ -57,13 +57,13 @@ public class LoanServiceImpl implements LoanService {
        return loanMapper.toDTO(saved);
     }
 
-    @GetMapping("/{loanId}")
+    @Override
     public LoanResponseDTO getLoanById(Long loanId){
         Loan loan = loanRepository.findById(loanId).orElseThrow(()-> new LoanNotFoundException("Loan record doesn't exists."));
         return loanMapper.toDTO(loan);
     }
 
-    @GetMapping("/all")
+    @Override
     public List<LoanResponseDTO> getAllLoans()
     {
         List<Loan> loans= loanRepository.findAll();
@@ -74,10 +74,10 @@ public class LoanServiceImpl implements LoanService {
         return loans.stream().map(loanMapper::toDTO).toList();
     }
 
-    @GetMapping("/all/{memberId}")
+    @Override
     public List<LoanResponseDTO> getAllLoansByMemberId(Long memberId)
     {
-       List<Loan> loans = loanRepository.findAllByMember_MemberId(memberId);
+       List<Loan> loans = loanRepository.findAllByMemberId(memberId);
        return loans.stream().map(loanMapper::toDTO).toList();
     }
 

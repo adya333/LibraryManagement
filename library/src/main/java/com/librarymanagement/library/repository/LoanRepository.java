@@ -11,5 +11,5 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan,Long> {
 
     @Query("select l from Loan l where l.member.memberId=:memberId")
-    List<Loan> findAllByMember_MemberId(Long memberId);
+    List<Loan> findAllByMemberId(Long memberId);
 }

@@ -29,7 +29,7 @@ public class LoanController {
         return new ResponseEntity<>(loanResponseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all/{memberId}")
+    @GetMapping("/{memberId}")
     public ResponseEntity<List<LoanResponseDTO>> getAllByMemberId(@PathVariable Long memberId)
     {
         List<LoanResponseDTO> loans = loanServiceImpl.getAllLoansByMemberId(memberId);

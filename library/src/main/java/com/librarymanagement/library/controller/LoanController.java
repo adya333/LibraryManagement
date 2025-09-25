@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/loan")
 public class LoanController {
@@ -25,5 +27,12 @@ public class LoanController {
     {
         LoanResponseDTO loanResponseDTO=loanServiceImpl.createLoan(loanRequestDTO);
         return new ResponseEntity<>(loanResponseDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/all/{memberId}")
+    public ResponseEntity<List<LoanResponseDTO>> getAllByMemberId(@PathVariable Long memberId)
+    {
+        List<LoanResponseDTO> loans = loanServiceImpl.getAllLoansByMemberId(memberId);
+        return new ResponseEntity<>(loans,HttpStatus.OK);
     }
 }

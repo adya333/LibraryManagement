@@ -71,3 +71,68 @@ In Java, primitive types like `int`, `double`, `boolean`, etc., **cannot be null
  Wrapper classes are **objects**, so they can be null. When you annotate a field of type `Integer` with `@NotNull`, the validation framework (like Spring’s Bean Validation) can check whether the
  value is null at runtime and reject invalid inputs, enforcing proper data validation before the object is persisted or processed. This is particularly important in DTOs where the field value comes from external sources, such as JSON requests,
  because it allows you to prevent missing or incomplete data from entering your application.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UNDERSTANDING SPRING SECURITY.
+  -> THE ENTITIES CLASSES
+  -> The Repository for members.
+  -> The UserDetail class.
+This userDetails is like an standard id card that the spring understands
+So this "CustomerMemeberDetails" takes one Member and creates a standard id of UserDetails for it which is then used to authenticate the member by the spring.
+
+The userDetails is a contract.
+it represents the principal or currently logged in member. This way spring simply look at the id card (UserDetails) for verification purposes rather than the entity class.
+For authentication: getUsername(), getPassword()
+for authorization: Collection<? extends GrantedAuthority> getAuthorities() thi used. It returns the principal's permissions.

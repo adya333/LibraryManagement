@@ -10,8 +10,10 @@ import java.util.List;
 public interface LoanService {
     LoanResponseDTO createLoan(LoanRequestDTO loanRequestDTO);
 //    LoanResponseDTO returnBook(Long loanId, LocalDate returnDate);
-//    LoanResponseDTO getLoanById(Long loanId);
-//    List<LoanResponseDTO> getALLLoans();
+    LoanResponseDTO getLoanById(Long loanId);
+    List<LoanResponseDTO> getAllLoans();
+    List<LoanResponseDTO> getAllLoansByMemberId(Long memberId);
+
 //    List<LoanResponseDTO> getLoanByStatus(LoanStatus status);
 //    LoanResponseDTO updateLoan(Long loanId, LoanRequeDTO );
 }

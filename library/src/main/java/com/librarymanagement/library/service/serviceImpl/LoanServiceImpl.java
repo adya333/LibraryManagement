@@ -4,6 +4,8 @@ import com.librarymanagement.library.entity.Book;
 import com.librarymanagement.library.entity.Loan;
 import com.librarymanagement.library.dtos.request.LoanRequestDTO;
 import com.librarymanagement.library.dtos.response.LoanResponseDTO;
+import com.librarymanagement.library.exception.LoanNotFoundException;
+import com.librarymanagement.library.exception.NoLoansException;
 import com.librarymanagement.library.exception.NotEnoughCopiesAvailable;
 import com.librarymanagement.library.mapper.BookMapper;
 import com.librarymanagement.library.mapper.LoanMapper;
@@ -13,6 +15,9 @@ import com.librarymanagement.library.service.BookService;
 import com.librarymanagement.library.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -51,4 +56,29 @@ public class LoanServiceImpl implements LoanService {
         bookRepository.save(book);
        return loanMapper.toDTO(saved);
     }
+
+    @GetMapping("/{loanId}")
+    public LoanResponseDTO getLoanById(Long loanId){
+        Loan loan = loanRepository.findById(loanId).orElseThrow(()-> new LoanNotFoundException("Loan record doesn't exists."));
+        return loanMapper.toDTO(loan);
+    }
+
+    @GetMapping("/all")
+    public List<LoanResponseDTO> getAllLoans()
+    {
+        List<Loan> loans= loanRepository.findAll();
+        if(loans.size()==0)
+        {
+            throw new NoLoansException("There are currently no loans");
+        }
+        return loans.stream().map(loanMapper::toDTO).toList();
+    }
+
+    @GetMapping("/all/{memberId}")
+    public List<LoanResponseDTO> getAllLoansByMemberId(Long memberId)
+    {
+       List<Loan> loans = loanRepository.findAllByMember_MemberId(memberId);
+       return loans.stream().map(loanMapper::toDTO).toList();
+    }
+
 }

@@ -36,6 +36,8 @@ public class Member {
     private LocalDate membershipDate;
     private MemberStatus status; // e.g., ACTIVE, INACTIVE, Blacklisted
 
+    private Role role;
+
     @NotNull
     @Column(nullable = false)
     private Integer maxBooksAllowed;

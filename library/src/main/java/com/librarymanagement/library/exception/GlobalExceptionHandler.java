@@ -27,4 +27,15 @@ public class GlobalExceptionHandler {
     {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
+
+    @ExceptionHandler({LoanNotFoundException.class})
+    public ResponseEntity<Object> handleLoanNotFoundException(LoanNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({NoLoansException.class})
+    public ResponseEntity<Object> handleNoLoansException(NoLoansException ex)
+    {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+    }
 }

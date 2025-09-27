@@ -72,6 +72,8 @@ In Java, primitive types like `int`, `double`, `boolean`, etc., **cannot be null
  value is null at runtime and reject invalid inputs, enforcing proper data validation before the object is persisted or processed. This is particularly important in DTOs where the field value comes from external sources, such as JSON requests,
  because it allows you to prevent missing or incomplete data from entering your application.
 
+10. When API endpoints are same they result in : Ambigous Mapping Exception
+
 
 
 

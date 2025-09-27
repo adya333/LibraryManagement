@@ -2,6 +2,7 @@ package com.librarymanagement.library.controller;
 
 import com.librarymanagement.library.dtos.request.LoanRequestDTO;
 import com.librarymanagement.library.dtos.response.LoanResponseDTO;
+import com.librarymanagement.library.entity.Loan;
 import com.librarymanagement.library.service.serviceImpl.LoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,24 @@ public class LoanController {
         return new ResponseEntity<>(loanResponseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{memberId}")
+    @GetMapping("/member/{memberId}")
     public ResponseEntity<List<LoanResponseDTO>> getAllByMemberId(@PathVariable Long memberId)
     {
         List<LoanResponseDTO> loans = loanServiceImpl.getAllLoansByMemberId(memberId);
+        return new ResponseEntity<>(loans,HttpStatus.OK);
+    }
+
+    @GetMapping("/loan/{loanId}")
+    public ResponseEntity<LoanResponseDTO> getLoanByLoanId(@PathVariable Long loanId)
+    {
+        LoanResponseDTO loan = loanServiceImpl.getLoanById(loanId);
+        return new ResponseEntity<>(loan, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<LoanResponseDTO>> getAllLoans()
+    {
+        List<LoanResponseDTO> loans = loanServiceImpl.getAllLoans();
         return new ResponseEntity<>(loans,HttpStatus.OK);
     }
 }
